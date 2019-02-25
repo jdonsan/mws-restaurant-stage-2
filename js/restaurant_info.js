@@ -1,3 +1,6 @@
+import DBHelper from './dbhelper'
+import SWHelper from './swhelper'
+
 let restaurant;
 var newMap;
 
@@ -12,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Initialize leaflet map
  */
-initMap = () => {
+function initMap() {
   fetchRestaurantFromURL()
     .then(restaurant => {
-      self.newMap = L.map('map', {
+      newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
         zoom: 16,
         scrollWheelZoom: false
@@ -29,7 +32,7 @@ initMap = () => {
         id: 'mapbox.streets'
       }).addTo(newMap);
       fillBreadcrumb(restaurant);
-      DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
+      DBHelper.mapMarkerForRestaurant(restaurant, newMap);
     })
     .catch(console.error)
 }
@@ -37,7 +40,7 @@ initMap = () => {
 /**
  * Get current restaurant from page URL.
  */
-fetchRestaurantFromURL = () => {
+function fetchRestaurantFromURL() {
   return new Promise((resolve, reject) => {
     const id = getParameterByName('id')
 
@@ -60,7 +63,7 @@ fetchRestaurantFromURL = () => {
 /**
  * Create restaurant HTML and add it to the webpage
  */
-fillRestaurantHTML = (restaurant) => {
+function fillRestaurantHTML(restaurant) {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
@@ -86,7 +89,7 @@ fillRestaurantHTML = (restaurant) => {
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
-fillRestaurantHoursHTML = (operatingHours) => {
+function fillRestaurantHoursHTML(operatingHours) {
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
@@ -106,7 +109,7 @@ fillRestaurantHoursHTML = (operatingHours) => {
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews) => {
+function fillReviewsHTML(reviews) {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
@@ -128,7 +131,7 @@ fillReviewsHTML = (reviews) => {
 /**
  * Create review HTML and add it to the webpage.
  */
-createReviewHTML = (review) => {
+function createReviewHTML(review) {
   const li = document.createElement('li');
 
   li.appendChild(createHeaderReviewHTML(review));
@@ -137,7 +140,7 @@ createReviewHTML = (review) => {
   return li;
 }
 
-createHeaderReviewHTML = (review) => {
+function createHeaderReviewHTML(review) {
   const h3 = document.createElement('h3')
 
   const name = document.createElement('span');
@@ -151,7 +154,7 @@ createHeaderReviewHTML = (review) => {
   return h3;
 }
 
-createBodyReviewHTML = (review) => {
+function createBodyReviewHTML(review) {
   const div = document.createElement('div');
 
   const rating = document.createElement('span');
@@ -168,7 +171,7 @@ createBodyReviewHTML = (review) => {
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-fillBreadcrumb = (restaurant) => {
+function fillBreadcrumb(restaurant) {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
@@ -178,7 +181,7 @@ fillBreadcrumb = (restaurant) => {
 /**
  * Get a parameter by name from page URL.
  */
-getParameterByName = (name, url) => {
+function getParameterByName(name, url) {
   if (!url)
     url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');

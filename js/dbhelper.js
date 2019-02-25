@@ -1,7 +1,7 @@
 /**
  * Common database helper functions.
  */
-class DBHelper {
+export default class DBHelper {
 
   /**
    * Database URL.
@@ -123,7 +123,7 @@ class DBHelper {
         alt: restaurant.name,
         url: DBHelper.urlForRestaurant(restaurant)
       })
-    marker.addTo(newMap);
+    marker.addTo(map);
     return marker;
   }
 

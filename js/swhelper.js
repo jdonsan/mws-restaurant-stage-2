@@ -1,7 +1,7 @@
 /**
  * Common sw helper functions.
  */
-class SWHelper {
+export default class SWHelper {
 
 	/**
 	 * Install Service Worker.
