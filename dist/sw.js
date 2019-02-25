@@ -3,10 +3,8 @@ const resources = [
   '/',
   '/restaurant.html',
   '/css/styles.css',
-  '/js/main.js',
-  '/js/restaurant_info.js',
-  '/js/swhelper.js',
-  '/js/dbhelper.js'
+  '/js/main.bundle.js',
+  '/js/restaurant_info.bundle.js'
 ];
 
 self.addEventListener('install', event => {
