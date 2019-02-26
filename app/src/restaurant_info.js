@@ -1,7 +1,7 @@
 import DBHelper from './dbhelper'
 import SWHelper from './swhelper'
+import L from 'leaflet'
 
-let restaurant;
 var newMap;
 
 /**

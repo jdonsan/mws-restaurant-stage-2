@@ -1,5 +1,6 @@
 import SWHelper from './swhelper'
 import DBHelper from './dbhelper'
+import L from 'leaflet'
 
 var newMap
 var markers = []
@@ -9,10 +10,16 @@ var markers = []
  */
 document.addEventListener('DOMContentLoaded', () => {
   SWHelper.install();
-  initMap(); // added 
   fetchNeighborhoods();
   fetchCuisines();
+  registerEvents()
+  initMap(); // added 
 });
+
+function registerEvents() {
+  document.getElementById('neighborhoods-select').addEventListener("change", () => updateRestaurants())
+  document.getElementById('cuisines-select').addEventListener("change", () => updateRestaurants())
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -97,9 +104,7 @@ function updateRestaurants() {
     .then(restaurants => {
       resetRestaurants()
       fillRestaurantsHTML(restaurants)
-    })
-    .catch(console.error)
-
+    }).catch(console.error)
 }
 
 /**

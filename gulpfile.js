@@ -6,6 +6,7 @@ const server = require('./tasks/server')
 const statics = require('./tasks/statics')
 
 watch(['app/**/*.js'], build)
+watch(['app/**/*.html'], statics)
 
 exports.build = build
 exports.server = server

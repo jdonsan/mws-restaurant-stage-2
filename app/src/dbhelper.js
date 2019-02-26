@@ -1,3 +1,4 @@
+import IDBHelper from './idbhelper'
 /**
  * Common database helper functions.
  */
@@ -16,9 +17,17 @@ export default class DBHelper {
    */
   static fetchRestaurants(id = '') {
     return new Promise((resolve, reject) => {
-      fetch(`${DBHelper.DATABASE_URL}/${id}`)
-        .then(response => response.json())
-        .then(restaurant => resolve(restaurant))
+      IDBHelper.count()
+        .then(counter => {         
+          if (counter !== 0) {
+            return IDBHelper.get(id).then(resolve)
+          } else {
+            return fetch(`${DBHelper.DATABASE_URL}/${id}`)
+              .then(response => response.json())
+              .then(restaurants => IDBHelper.set(restaurants))
+              .then(resolve)
+          }
+        })
         .catch(error => reject(`Request failed. Returned status of ${error}`))
     })
   }
@@ -90,7 +99,7 @@ export default class DBHelper {
     return DBHelper.fetchRestaurants().then(restaurants => {
       // Get all cuisines from all restaurants
       const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
-      
+
       // Remove duplicates from cuisines
       const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
 

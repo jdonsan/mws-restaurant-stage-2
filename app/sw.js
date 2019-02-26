@@ -31,7 +31,7 @@ self.addEventListener('fetch', event => {
         return fetch(fetchRequest).then(response => {
           const responseToCache = response.clone();
 
-          if (event.request.url.endsWith('.jpg')) {
+          if (event.request.url.endsWith('.jpg') || event.request.url.endsWith('.png')) {
             caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache))
           }
 

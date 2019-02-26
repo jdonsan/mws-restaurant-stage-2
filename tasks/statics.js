@@ -6,6 +6,7 @@ module.exports = function statics() {
     'app/assets/**',
     'app/index.html',
     'app/restaurant.html',
-    'app/sw.js'
+    'app/sw.js',
+    'app/manifest.json'
   ]).pipe(dest('dist/'))
 }
