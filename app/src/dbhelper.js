@@ -18,18 +18,18 @@ export default class DBHelper {
   static fetchRestaurants(id = '') {
     return new Promise((resolve, reject) => {
       IDBHelper.count()
-        .then(counter => {         
-          if (counter !== 0) {
-            return IDBHelper.get(id).then(resolve)
-          } else {
-            return fetch(`${DBHelper.DATABASE_URL}/${id}`)
-              .then(response => response.json())
-              .then(restaurants => IDBHelper.set(restaurants))
-              .then(resolve)
-          }
-        })
+        .then(counter => (counter !== 0)
+          ? IDBHelper.get(id).then(resolve)
+          : DBHelper.fetchAPI(id).then(resolve)
+        )
         .catch(error => reject(`Request failed. Returned status of ${error}`))
     })
+  }
+
+  static fetchAPI(id = '') {
+    return fetch(`${DBHelper.DATABASE_URL}/${id}`)
+      .then(response => response.json())
+      .then(restaurants => IDBHelper.set(restaurants))
   }
 
   /**

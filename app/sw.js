@@ -2,9 +2,10 @@ const CACHE_NAME = 'my-site-cache-v2';
 const resources = [
   '/',
   '/restaurant.html',
+  '/manifest.json',
   '/css/styles.css',
-  '/js/main.bundle.js',
-  '/js/restaurant_info.bundle.js'
+  '/js/main.min.js',
+  '/js/restaurant_info.min.js'
 ];
 
 self.addEventListener('install', event => {
